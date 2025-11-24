@@ -23,7 +23,7 @@ namespace Niksan.CardGame
             _pool = new ObjectPool<BasicCard>(_cardPrefab, _cardParent, _initialPoolSize);
         }
 
-        public BasicCard CreateCard(CardData data, Vector3 position)
+        public BasicCard CreateCard(Card data, Vector3 position)
         {
             BasicCard card = _pool.Get();
             card.transform.position = position;

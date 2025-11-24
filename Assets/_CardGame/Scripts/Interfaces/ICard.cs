@@ -20,7 +20,7 @@ namespace Niksan.CardGame
         /// Should be called during card initialization.
         /// </summary>
         /// <param name="data">The card data to assign.</param>
-        void SetData(CardData data);
+        void SetData(Card data);
 
         /// <summary>
         /// Handles logic when the card is clicked by the player.

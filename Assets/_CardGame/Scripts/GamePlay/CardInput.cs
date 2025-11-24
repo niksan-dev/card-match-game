@@ -39,8 +39,9 @@ namespace Niksan.CardGame
         {
             if (card == null || card.IsFlipped)
                 return;
-
+            Debug.Log("Card clicked: " + card.ID);
             // Notify game logic of the card click TODO: 
+            EventBus.RaiseCardClicked(card);
         }
     }
 

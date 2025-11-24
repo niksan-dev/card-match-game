@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 1759033408}
   - component: {fileID: 1759033407}
   - component: {fileID: 1759033409}
+  - component: {fileID: 1759033410}
   m_Layer: 5
   m_Name: Panel-GameBoard
   m_TagString: Untagged
@@ -701,3 +702,22 @@ MonoBehaviour:
   m_Spacing: {x: 25, y: 25}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &1759033410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759033405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65041ee5fab74b6448fd7d546b79df1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardPrefab: {fileID: 3533522812273168234, guid: 7a8d0cfe4320b0b43b2cf18b3096e12d, type: 3}
+  boardPanel: {fileID: 1759033406}
+  gridLayout: {fileID: 1759033409}
+  levelConfigs:
+  - {fileID: 11400000, guid: 14b8ecedfbbb4da4f8f2c068c1f2a7cf, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}

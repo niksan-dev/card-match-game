@@ -19,7 +19,7 @@ namespace Niksan.CardGame
         [Header("Flip Animation Settings")]
         [SerializeField] private float flipDuration = 0.25f;  // Duration for the flip animation
 
-        private CardData data;
+        private Card data;
         private bool isFlipped = false;
 
         /// <summary>
@@ -30,16 +30,16 @@ namespace Niksan.CardGame
         /// <summary>
         /// The ID of the card, derived from its data.
         /// </summary>
-        public int ID => data?.ID ?? -1;
+        public int ID => data?.id ?? -1;
 
         /// <summary>
         /// Sets up the card's visuals and logic from the assigned CardData.
         /// </summary>
         /// <param name="cardData">The data representing this card's identity and appearance.</param>
-        public void SetData(CardData cardData)
+        public void SetData(Card cardData)
         {
             this.data = cardData;
-            frontImage.sprite = cardData.FrontSprite;
+            frontImage.sprite = cardData.faceSprite;
             GetComponent<CardInput>()?.Initialize(this);
             HideInstant(); // Card starts hidden (back side shown)
         }
