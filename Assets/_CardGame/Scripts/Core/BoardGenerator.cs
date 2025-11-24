@@ -43,10 +43,12 @@ namespace Niksan.CardGame
             float panelWidth = boardPanel.rect.width
                                - gridLayout.padding.left
                                - gridLayout.padding.right
+                               - hudHeight
                                - gridLayout.spacing.x * (config.columns - 1);
 
             float panelHeight = boardPanel.rect.height
                                 - gridLayout.padding.top
+                                - hudHeight
                                 - gridLayout.padding.bottom
                                 - gridLayout.spacing.y * (config.rows - 1);
 
