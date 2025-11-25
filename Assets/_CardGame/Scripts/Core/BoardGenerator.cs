@@ -17,13 +17,13 @@ namespace Niksan.CardGame
         [SerializeField] private GridLayoutGroup gridLayout;
         private List<BasicCard> spawnedCards = new List<BasicCard>();
         [Header("UI Settings")]
-        private float hudHeight = 150f; // Optional: Reserved space for HUD if needed
+        private float hudHeight = 100f; // Optional: Reserved space for HUD if needed
 
         [Header("Level Configs")]
         [SerializeField] private List<LevelConfig> levelConfigs;
         void Start()
         {
-            GenerateBoard(levelConfigs[3]);
+            GenerateBoard(levelConfigs[2]);
         }
         /// <summary>
         /// Generates a board based on the provided level configuration.
@@ -90,8 +90,7 @@ namespace Niksan.CardGame
             float panelWidth = Screen.width
                                - gridLayout.padding.left
                                - gridLayout.padding.right
-                               - hudHeight
-                               - gridLayout.spacing.x * (config.columns);
+                               - gridLayout.spacing.x * (config.columns - 1);
 
             return panelWidth;
         }
@@ -102,7 +101,7 @@ namespace Niksan.CardGame
                                - gridLayout.padding.top
                                - hudHeight
                                - gridLayout.padding.bottom
-                               - gridLayout.spacing.y * (config.rows);
+                               - gridLayout.spacing.y * (config.rows - 1);
             return panelHeight;
         }
 
@@ -121,6 +120,7 @@ namespace Niksan.CardGame
             // Starting point (top-left corner)
             float startX = -boardWidth / 2 + size / 2;
             float startY = boardHeight / 2 - size / 2;
+            startY -= hudHeight;
 
             for (int i = 0; i < cards.Count; i++)
             {
