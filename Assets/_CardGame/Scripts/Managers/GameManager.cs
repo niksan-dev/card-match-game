@@ -51,6 +51,7 @@ namespace Niksan.CardGame
 
         public UIManager UIManager => uiManager;
         public ProgressionManager ProgressionManager => progressionManager;
+        public LevelsData LevelsData => levelsData;
         /// <summary>
         /// Starts the current level by generating the board and initializing match finder.
         /// </summary>

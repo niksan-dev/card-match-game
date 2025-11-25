@@ -74,6 +74,7 @@ namespace Niksan.CardGame
 
                 yield return new WaitForSeconds(checkDelay);
 
+                EventBus.RaiseAttemptMade();
                 if (first.ID == second.ID)
                 {
                     // Match found

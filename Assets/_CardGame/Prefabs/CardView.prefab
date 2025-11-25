@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3533522812273168228}
   - component: {fileID: 8126223988441904376}
   - component: {fileID: 6348416689116659593}
+  - component: {fileID: -8770828673408018451}
   m_Layer: 5
   m_Name: CardView
   m_TagString: Card
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e64455ea31e80246b3013ae2b04caba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardState: 0
   frontImage: {fileID: 3533522813348676278}
   frontRoot: {fileID: 3533522812838740582}
   backRoot: {fileID: 3533522812764466954}
@@ -108,6 +110,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1e8ac37093fe7b4185588871b03753a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &-8770828673408018451
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533522812273168234}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &3533522812764466954
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,10 @@ namespace Niksan.CardGame
     /// </summary>
     public class BasicCard : MonoBehaviour, ICard
     {
+
+        private CanvasGroup canvasGroup;
+
+        public CardState cardState = CardState.FaceDown;
         [Header("Card Visuals")]
         [SerializeField] private Image frontImage;         // Image component to show the front face
         [SerializeField] private GameObject frontRoot;     // Parent GameObject for the front side
@@ -38,6 +42,7 @@ namespace Niksan.CardGame
         /// <param name="cardData">The data representing this card's identity and appearance.</param>
         public void SetData(Card cardData)
         {
+            canvasGroup.alpha = 1;
             this.data = cardData;
             frontImage.sprite = cardData.faceSprite;
             GetComponent<CardInput>()?.Initialize(this);
@@ -47,6 +52,7 @@ namespace Niksan.CardGame
         private void Awake()
         {
             // Optional initialization if needed
+            canvasGroup = GetComponent<CanvasGroup>();
         }
 
         /// <summary>
@@ -64,6 +70,7 @@ namespace Niksan.CardGame
         public void Reveal()
         {
             if (isFlipped) return;
+            cardState = CardState.FaceUp;
             StartCoroutine(Flip(true));
         }
 
@@ -73,6 +80,7 @@ namespace Niksan.CardGame
         public void Hide()
         {
             if (!isFlipped) return;
+            cardState = CardState.FaceDown;
             StartCoroutine(Flip(false));
         }
 
@@ -131,12 +139,16 @@ namespace Niksan.CardGame
 
         public void Disappear()
         {
+            canvasGroup.alpha = 0.5f;
+            cardState = CardState.Matched;
             // transform.localScale = Vector3.zero;
 
             //add back to object pool if implemented
-            ObjectPooler.Instance.ReturnToPool(this.gameObject);
+            // ObjectPooler.Instance.ReturnToPool(this.gameObject);
         }
 
     }
 
 }
+
+

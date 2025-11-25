@@ -13,8 +13,38 @@ MonoBehaviour:
   m_Name: LevelsData
   m_EditorClassIdentifier: 
   levels:
-  - {fileID: 11400000, guid: 14b8ecedfbbb4da4f8f2c068c1f2a7cf, type: 2}
-  - {fileID: 11400000, guid: 341faa53696ed0a4985c776f1b5cb4ae, type: 2}
-  - {fileID: 11400000, guid: e9fc5a26b8ac79f448abebd5fbaaa3ee, type: 2}
-  - {fileID: 11400000, guid: 4fbb35cd18e3a1c4d97385a61cf8c86e, type: 2}
-  - {fileID: 11400000, guid: cdc2827f385f3d24e881e13c5ce8e5d1, type: 2}
+  - displayName: 0
+    rows: 2
+    columns: 2
+    pointsPerMatch: 10
+    bonusMultiplier: 5
+    colorBg: {r: 0.05602523, g: 0.4811321, b: 0.015886446, a: 1}
+    colorCardBack: {r: 0.6366125, g: 0.9528302, b: 0.6067551, a: 1}
+  - displayName: 1
+    rows: 2
+    columns: 3
+    pointsPerMatch: 20
+    bonusMultiplier: 5
+    colorBg: {r: 0.5754717, g: 0.43780988, b: 0, a: 1}
+    colorCardBack: {r: 0.9528302, g: 0.86144245, b: 0.57079923, a: 1}
+  - displayName: 2
+    rows: 3
+    columns: 4
+    pointsPerMatch: 30
+    bonusMultiplier: 10
+    colorBg: {r: 0.5566038, g: 0, b: 0, a: 1}
+    colorCardBack: {r: 0.9339623, g: 0.5154415, b: 0.5154415, a: 1}
+  - displayName: 3
+    rows: 4
+    columns: 4
+    pointsPerMatch: 40
+    bonusMultiplier: 15
+    colorBg: {r: 0.5283019, g: 0, b: 0.4620052, a: 1}
+    colorCardBack: {r: 0.9433962, g: 0.48504806, b: 0.885878, a: 1}
+  - displayName: 4
+    rows: 5
+    columns: 6
+    pointsPerMatch: 100
+    bonusMultiplier: 20
+    colorBg: {r: 0.06692552, g: 0, b: 0.6320754, a: 1}
+    colorCardBack: {r: 0.6070236, g: 0.5683072, b: 0.9339623, a: 1}

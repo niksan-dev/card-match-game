@@ -13,30 +13,35 @@ namespace Niksan.UI
     {
         [SerializeField] Button replayButton;
         [SerializeField] Button nextButton;
+        [SerializeField] Button mainMenuButton;
         private void Awake()
         {
             nextButton.onClick.AddListener(OnClickNext);
             replayButton.onClick.AddListener(OnClicReplay);
+            mainMenuButton.onClick.AddListener(() =>
+            {
+                GameManager.Instance.UIManager.ShowMainMenu();
+            });
         }
 
         private void OnEnable()
         {
             //no more levels available to play
             //disable next button
-            nextButton.gameObject.SetActive(GameManager.Instance.currentLevel < GameManager.Instance.maxLevels-1);
+            nextButton.gameObject.SetActive(GameManager.Instance.currentLevel < GameManager.Instance.maxLevels - 1);
         }
 
         void OnClickNext()
         {
             GameManager.Instance.currentLevel++;
             Debug.Log("[OnClickNext] OnClickNext]");
-            uIManager.ShowInGame();  
+            uIManager.ShowInGame();
         }
-        
+
         void OnClicReplay()
         {
             Debug.Log("[OnClicReplay] OnClicReplay]");
-            uIManager.ShowInGame();  
+            uIManager.ShowInGame();
         }
     }
 }

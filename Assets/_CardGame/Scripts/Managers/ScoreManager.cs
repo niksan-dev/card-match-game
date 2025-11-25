@@ -1,5 +1,6 @@
 
 using System;
+using Niksan.CardGame.Data;
 using UnityEngine;
 
 namespace Niksan.CardGame
@@ -9,16 +10,19 @@ namespace Niksan.CardGame
     /// </summary>
     public class ScoreManager : MonoBehaviour
     {
+        [SerializeField] private LevelsData levelsData;
         internal int CurrentScore { get; private set; }
         private int matchStreak;
 
-        private const int PER_MATCH_POINTS = 100;
-        private const int BONUS_MULTIPLIER = 15;
+        private int PER_MATCH_POINTS = 100;
+        private int BONUS_MULTIPLIER = 15;
 
         #region Unity Events
 
         private void OnEnable()
         {
+            PER_MATCH_POINTS = levelsData.levels[GameManager.Instance.currentLevel].pointsPerMatch;
+            BONUS_MULTIPLIER = levelsData.levels[GameManager.Instance.currentLevel].bonusMultiplier;
             EventBus.OnCardsMatched += OnCardsMatched;
             EventBus.OnCardsMismatched += OnCardsMismatched;
             ResetScore();

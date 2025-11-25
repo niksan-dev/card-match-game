@@ -8,7 +8,11 @@ namespace Niksan.UI
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance;
+
+
         [SerializeField] private GameObject mainMenuObject;
+        [SerializeField] private GameObject saveAndExitPopupObject;
+        [SerializeField] private GameObject loadSavedPopupObject;
         [SerializeField] private GameObject inGameObject;
         [SerializeField] private GameObject gameOverObject;
         [SerializeField] private ScreenBase[] screens;
@@ -30,6 +34,18 @@ namespace Niksan.UI
             {
                 screen.Init(this);
             }
+        }
+
+        public void ShowSaveAndExitPopup(bool enable)
+        {
+            // Implementation for showing Save and Exit Popup
+            saveAndExitPopupObject.SetActive(enable);
+        }
+
+        public void ShowPreviouslySavedPopup(bool enable)
+        {
+            // Implementation for showing Load Previously Saved Popup
+            loadSavedPopupObject.SetActive(enable);
         }
 
         public void ShowMainMenu()
@@ -55,6 +71,8 @@ namespace Niksan.UI
             mainMenuObject.SetActive(false);
             inGameObject.SetActive(false);
             gameOverObject.SetActive(false);
+            saveAndExitPopupObject.SetActive(false);
+            loadSavedPopupObject.SetActive(false);
         }
     }
 }

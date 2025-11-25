@@ -15,6 +15,7 @@ namespace Niksan.CardGame
         public static event Action<ICard> OnCardFlipped;
         public static event Action OnGameStarted;
 
+        public static event Action OnAttemptMade;
         public static void RaiseCardsMatched(ICard a, ICard b) => OnCardsMatched?.Invoke(a, b);
         public static void RaiseCardsMismatched(ICard a, ICard b) => OnCardsMismatched?.Invoke(a, b);
         public static void RaiseLevelCompleted() => OnLevelCompleted?.Invoke();
@@ -25,5 +26,6 @@ namespace Niksan.CardGame
 
         public static void RaiseScoreUpdate(int score, int streak) => OnScoreUpdate?.Invoke(score, streak);
         public static void RaiseClickPlay() => OnClickPlay?.Invoke();
+        public static void RaiseAttemptMade() => OnAttemptMade?.Invoke();
     }
 }

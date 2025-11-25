@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Niksan.CardGame.Data;
 using Niksan.CardGame.Utils;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 namespace Niksan.CardGame
 {
@@ -12,15 +13,18 @@ namespace Niksan.CardGame
     public class BoardGenerator : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] private SpriteData spriteData;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private RectTransform boardPanel;
-        [SerializeField] private GridLayoutGroup gridLayout;
+        //   [SerializeField] private GridLayoutGroup gridLayout;
         private List<BasicCard> spawnedCards = new List<BasicCard>();
         [Header("UI Settings")]
         private float hudHeight = 100f; // Optional: Reserved space for HUD if needed
 
         [Header("Level Configs")]
         [SerializeField] private LevelsData levelsData;
+
+        private float padding = 20f;
         void Start()
         {
             GenerateBoard(levelsData.levels[GameManager.Instance.currentLevel]);
@@ -58,10 +62,10 @@ namespace Niksan.CardGame
             float size = Mathf.Min(cellWidth, cellHeight);
             Debug.Log($"Cell Size: {size}");
             // Apply calculated cell size
-            gridLayout.cellSize = new Vector2(size, size);
+            // gridLayout.cellSize = new Vector2(size, size);
 
             // Get shuffled card face pairs
-            var pairs = CardUtility.GenerateShuffledPairs(config.cardFaces, total / 2);
+            var pairs = CardUtility.GenerateShuffledPairs(spriteData.sprites, total / 2);
             spawnedCards.Clear();
             // Instantiate and initialize cards
             foreach (var face in pairs)
@@ -79,18 +83,49 @@ namespace Niksan.CardGame
                 }
                 cardFromFactory.transform.SetParent(boardPanel);
                 card.SetData(face);
+                card.Reveal();
             }
             Vector2 gridSize = new Vector2(config.columns, config.rows);
             PlaceCardsManually(spawnedCards, boardPanel, size, gridSize);
+            StartCoroutine(HideAllCardsAfterDelay(2f));
+        }
+
+        IEnumerator HideAllCardsAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            foreach (var card in spawnedCards)
+            {
+                card.Hide();
+            }
+
+
+            SaveLevelData();
+        }
+
+        void SaveLevelData()
+        {
+            LevelSaveData levelSaveDataRoot = new LevelSaveData();
+            foreach (var card in spawnedCards)
+            {
+                CardSaveData saveData = new CardSaveData
+                {
+                    id = card.ID,
+                    state = card.cardState
+                };
+
+                levelSaveDataRoot.cardsData.Add(saveData);
+
+            }
+
+            levelsData.levels[GameManager.Instance.currentLevel].isSaved = true;
         }
 
         float GetWidth(LevelConfig config)
         {
             Debug.Log("Screen Width: " + Screen.width);
             float panelWidth = Screen.width
-                               - gridLayout.padding.left
-                               - gridLayout.padding.right
-                               - gridLayout.spacing.x * (config.columns - 1);
+                               - padding * 2
+                               - padding * (config.columns - 1);
 
             return panelWidth;
         }
@@ -98,10 +133,9 @@ namespace Niksan.CardGame
         {
             Debug.Log("Screen Height: " + Screen.height);
             float panelHeight = Screen.height
-                               - gridLayout.padding.top
+                               - padding * 2
                                - hudHeight
-                               - gridLayout.padding.bottom
-                               - gridLayout.spacing.y * (config.rows - 1);
+                               - padding * (config.rows - 1);
             return panelHeight;
         }
 

@@ -5,21 +5,21 @@ namespace Niksan.CardGame.Utils
 {
     public static class CardUtility
     {
-        public static List<Card> GenerateShuffledPairs(Sprite[] availableFaces, int pairCount)
+        public static List<Card> GenerateShuffledPairs(List<SpriteDataEntry> availableFaces, int pairCount)
         {
-            if (availableFaces.Length < pairCount)
+            if (availableFaces.Count < pairCount)
             {
                 Debug.LogError("Not enough unique card faces to generate the requested pairs!");
                 return new List<Card>();
             }
 
             List<Card> result = new List<Card>();
-            List<Sprite> shuffled = new List<Sprite>(availableFaces);
+            List<SpriteDataEntry> shuffled = new List<SpriteDataEntry>(availableFaces);
             Shuffle(shuffled);
 
             for (int i = 0; i < pairCount; i++)
             {
-                var sprite = shuffled[i];
+                var sprite = shuffled[i].sprite;
                 var dataA = new Card(i, sprite);
                 var dataB = new Card(i, sprite); // Duplicate with same ID
 
