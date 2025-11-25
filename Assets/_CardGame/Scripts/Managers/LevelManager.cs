@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour
 
             levelGO.transform.SetParent(levelsParent);
             levelGO.transform.localScale = Vector3.one;
-            levelGO.GetComponent<LevelUI>().SetData(level.displayName.ToString(), levelId, level.columns, level.rows);
+            levelGO.GetComponent<LevelUI>().SetData(level.displayName.ToString(), levelId, level.columns, level.rows, level.pointsPerMatch);
             levelGO.GetComponent<LevelUI>().SetColor(level.colorBg, level.colorCardBack);
             levelId++;
             levelUIs.Add(levelGO.GetComponent<LevelUI>());
@@ -34,7 +34,7 @@ public class LevelManager : MonoBehaviour
         int i = 0;
         foreach (var level in levelsData.levels)
         {
-            levelUIs[i].SetData(level.displayName.ToString(), i, level.columns, level.rows);
+            levelUIs[i].SetData(level.displayName.ToString(), i, level.columns, level.rows, level.pointsPerMatch);
             i++;
         }
     }

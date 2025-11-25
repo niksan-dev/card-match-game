@@ -15,7 +15,7 @@ namespace Niksan.CardGame
         public float checkDelay = 0.5f;
 
         private Queue<ICard> flipQueue = new Queue<ICard>();   // Cards waiting for match check
-        private HashSet<ICard> matchedCards = new HashSet<ICard>(); // Successfully matched cards
+        internal HashSet<ICard> matchedCards = new HashSet<ICard>(); // Successfully matched cards
 
         private int totalCards; // Total cards in current level
 

@@ -13,6 +13,7 @@ namespace Niksan.CardGame
     public class BoardGenerator : MonoBehaviour
     {
         [Header("References")]
+        [SerializeField] private ScoreUI scoreUI;
         [SerializeField] private SpriteData spriteData;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private RectTransform boardPanel;
@@ -27,7 +28,7 @@ namespace Niksan.CardGame
         private float padding = 20f;
         void Start()
         {
-            GenerateBoard(levelsData.levels[GameManager.Instance.currentLevel]);
+            //  GenerateBoard(levelsData.levels[GameManager.Instance.currentLevel]);
         }
         /// <summary>
         /// Generates a board based on the provided level configuration.
@@ -51,21 +52,74 @@ namespace Niksan.CardGame
             float panelWidth = GetWidth(config);
 
             float panelHeight = GetHeight(config);
-
-
-            Debug.Log($"Panel Width: {panelWidth}, Panel Height: {panelHeight}");
             // Determine card size based on smallest cell (square shape)
             float cellWidth = panelWidth / config.columns;
-            Debug.Log($"Cell Width: {cellWidth}");
             float cellHeight = panelHeight / config.rows;
-            Debug.Log($"Cell Height: {cellHeight}");
             float size = Mathf.Min(cellWidth, cellHeight);
-            Debug.Log($"Cell Size: {size}");
             // Apply calculated cell size
             // gridLayout.cellSize = new Vector2(size, size);
 
             // Get shuffled card face pairs
             var pairs = CardUtility.GenerateShuffledPairs(spriteData.sprites, total / 2);
+
+            if (config.isSaved)
+            {
+                LevelSaveDataRoot levelSaveDataRoot = BinarySaveLoadSystem.Load<LevelSaveDataRoot>(GameManager.Instance.levelSaveFileName);
+                LevelSaveData levelSaveData = levelSaveDataRoot.levelsData.Find(l => l.levelID == GameManager.Instance.currentLevel);
+                if (levelSaveData != null)
+                {
+                    Debug.Log("Loading saved level data for level " + GameManager.Instance.currentLevel);
+                    spawnedCards.Clear();
+                    // Instantiate and initialize cards
+                    foreach (var cardData in levelSaveData.cardsData)
+                    {
+                        Debug.Log("Restoring card with ID: " + cardData.id);
+                        Card face = new Card(cardData.id, spriteData.sprites.Find(s => s.id == cardData.id).sprite);
+                        var cardFromFactory = CardFactory.Instance.CreateCard(face, Vector2.zero);
+                        spawnedCards.Add(cardFromFactory);
+                        var card = cardFromFactory.GetComponent<ICard>();
+                        RectTransform rectTransform = cardFromFactory.GetComponent<RectTransform>();
+                        if (rectTransform != null)
+                        {
+                            rectTransform.sizeDelta = new Vector2(size, size);
+                        }
+                        cardFromFactory.transform.SetParent(boardPanel);
+                        card.SetData(face);
+
+                        // Restore saved state
+                        CardSaveData savedCardData = levelSaveData.cardsData.Find(c => c.id == card.ID);
+                        if (savedCardData != null)
+                        {
+                            cardFromFactory.cardState = savedCardData.state;
+                            if (cardFromFactory.cardState == CardState.Matched)
+                            {
+                                card.Disappear();
+                                //add this card to matched cards in scoreUI
+                                GameManager.Instance.MatchFinder.matchedCards.Add(card);
+                            }
+                            else if (cardFromFactory.cardState == CardState.FaceUp)
+                            {
+                                card.Reveal();
+                            }
+                            else
+                            {
+                                card.Hide();
+                            }
+                        }
+                        else
+                        {
+                            card.Hide();
+                        }
+                    }
+                    Vector2 gridSizeN = new Vector2(config.columns, config.rows);
+                    PlaceCardsManually(spawnedCards, boardPanel, size, gridSizeN);
+                    scoreUI.SetFromSavedData(levelSaveData.currentAttempts, levelSaveData.totalMatchesFound, levelSaveData.currentScore, levelSaveData.currentStreak);
+                    GameManager.Instance.ScoreManager.SetDataFromSave(levelSaveData);
+                    levelSaveDataRoot.levelsData.Remove(levelSaveData);
+                    BinarySaveLoadSystem.Save(levelSaveDataRoot, GameManager.Instance.levelSaveFileName);
+                    return;
+                }
+            }
             spawnedCards.Clear();
             // Instantiate and initialize cards
             foreach (var face in pairs)
@@ -95,16 +149,18 @@ namespace Niksan.CardGame
             yield return new WaitForSeconds(delay);
             foreach (var card in spawnedCards)
             {
-                card.Hide();
+                if (card.cardState != CardState.Matched)
+                    card.Hide();
             }
 
 
-            SaveLevelData();
+            // SaveLevelData();
         }
 
-        void SaveLevelData()
+        internal void SaveLevelData()
         {
-            LevelSaveData levelSaveDataRoot = new LevelSaveData();
+            Debug.Log("Saving level data for level " + GameManager.Instance.currentLevel);
+            LevelSaveData levelSaveData = new LevelSaveData();
             foreach (var card in spawnedCards)
             {
                 CardSaveData saveData = new CardSaveData
@@ -113,10 +169,19 @@ namespace Niksan.CardGame
                     state = card.cardState
                 };
 
-                levelSaveDataRoot.cardsData.Add(saveData);
+                levelSaveData.cardsData.Add(saveData);
 
             }
+            levelSaveData.currentAttempts = scoreUI.currentAttempts;
+            levelSaveData.totalMatchesFound = scoreUI.currentMatches;
+            levelSaveData.currentScore = scoreUI.currentScore;
+            levelSaveData.currentStreak = scoreUI.maxStreak;
+            levelSaveData.levelID = GameManager.Instance.currentLevel;
+            LevelSaveDataRoot levelSaveDataRoot = BinarySaveLoadSystem.Load<LevelSaveDataRoot>(GameManager.Instance.levelSaveFileName);
+            levelSaveDataRoot.levelsData.Add(levelSaveData);
+            BinarySaveLoadSystem.Save(levelSaveDataRoot, GameManager.Instance.levelSaveFileName);
 
+            Debug.Log("Level data saved for level " + JsonUtility.ToJson(levelSaveDataRoot));
             levelsData.levels[GameManager.Instance.currentLevel].isSaved = true;
         }
 

@@ -26,6 +26,17 @@ namespace Niksan.UI
 
         private void OnEnable()
         {
+
+            LevelSaveDataRoot levelSaveDataRoot = BinarySaveLoadSystem.Load<LevelSaveDataRoot>(GameManager.Instance.levelSaveFileName);
+            LevelSaveData levelSaveData = levelSaveDataRoot.levelsData.Find(l => l.levelID == GameManager.Instance.currentLevel);
+            if (levelSaveData != null)
+            {
+                levelSaveDataRoot.levelsData.Remove(levelSaveData);
+
+                BinarySaveLoadSystem.Save(levelSaveDataRoot, GameManager.Instance.levelSaveFileName);
+            }
+
+            GameManager.Instance.LevelsData.levels[GameManager.Instance.currentLevel].isSaved = false;
             //no more levels available to play
             //disable next button
             nextButton.gameObject.SetActive(GameManager.Instance.currentLevel < GameManager.Instance.maxLevels - 1);

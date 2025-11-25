@@ -24,6 +24,8 @@ namespace Niksan.CardGame
         internal int currentMatches = 0;
         internal int currentScore = 0;
         internal int maxStreak = 0;
+
+        bool isSetFromSave = false;
         private void Awake()
         {
             // Subscribe to score update events
@@ -42,10 +44,29 @@ namespace Niksan.CardGame
 
         void OnEnable()
         {
-            UpdateUI(0, 0);
-            ResetVariables();
-            UpdateMatchText();
+            Debug.Log("[SetFromSavedData  OnEnable] attempts: " + currentAttempts + " matches: " + currentMatches + " score: " + currentScore + " streak: " + maxStreak);
+            if (!isSetFromSave)
+            {
+                UpdateUI(0, 0);
+                ResetVariables();
+                UpdateMatchText();
+                UpdateAttemptText();
+            }
+            isSetFromSave = false;
+        }
+
+        public void SetFromSavedData(int attempts, int matches, int score, int streak)
+        {
+            isSetFromSave = true;
+            currentAttempts = attempts;
+            currentMatches = matches;
+            currentScore = score;
+            maxStreak = streak;
+
+            Debug.Log("[SetFromSavedData] attempts: " + attempts + " matches: " + matches + " score: " + score + " streak: " + streak);
             UpdateAttemptText();
+            UpdateMatchText();
+            UpdateUI(currentScore, maxStreak);
         }
 
         void OnDisable()

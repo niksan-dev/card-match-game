@@ -139,6 +139,7 @@ namespace Niksan.CardGame
 
         public void Disappear()
         {
+            Reveal();
             canvasGroup.alpha = 0.5f;
             cardState = CardState.Matched;
             // transform.localScale = Vector3.zero;

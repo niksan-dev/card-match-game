@@ -12,6 +12,9 @@ namespace Niksan.CardGame
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+
+
+        internal string levelSaveFileName = "levelSaveData";
         public static GameManager Instance;
 
         [Header("References")]
@@ -52,6 +55,10 @@ namespace Niksan.CardGame
         public UIManager UIManager => uiManager;
         public ProgressionManager ProgressionManager => progressionManager;
         public LevelsData LevelsData => levelsData;
+
+        public MatchFinder MatchFinder => matchFinder;
+
+        public ScoreManager ScoreManager => scoreManager;
         /// <summary>
         /// Starts the current level by generating the board and initializing match finder.
         /// </summary>

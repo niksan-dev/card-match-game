@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public static class BinarySaveLoadSystem
 {
@@ -19,7 +18,7 @@ public static class BinarySaveLoadSystem
     public static T Load<T>(string fileName) where T : new()
     {
         string path = GetFilePath<T>(fileName);
-         Debug.Log($"path : {path}");
+        Debug.Log($"path : {path}");
         if (File.Exists(path))
         {
             string encryptedJson = File.ReadAllText(path);

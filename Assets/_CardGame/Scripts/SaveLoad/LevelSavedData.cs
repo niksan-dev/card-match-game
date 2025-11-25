@@ -15,6 +15,10 @@ public class CardSaveData
 public class LevelSaveData
 {
     public int levelID;
+    public int currentScore;
+    public int totalMatchesFound;
+    public int currentStreak;
+    public int currentAttempts;
     public List<CardSaveData> cardsData = new List<CardSaveData>();
 }
 

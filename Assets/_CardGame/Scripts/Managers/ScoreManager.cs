@@ -17,15 +17,20 @@ namespace Niksan.CardGame
         private int PER_MATCH_POINTS = 100;
         private int BONUS_MULTIPLIER = 15;
 
+        bool isSetFromSave = false;
+
         #region Unity Events
 
         private void OnEnable()
         {
+
             PER_MATCH_POINTS = levelsData.levels[GameManager.Instance.currentLevel].pointsPerMatch;
             BONUS_MULTIPLIER = levelsData.levels[GameManager.Instance.currentLevel].bonusMultiplier;
             EventBus.OnCardsMatched += OnCardsMatched;
             EventBus.OnCardsMismatched += OnCardsMismatched;
-            ResetScore();
+            if (!isSetFromSave)
+                ResetScore();
+            isSetFromSave = false;
         }
 
         private void OnDisable()
@@ -33,6 +38,14 @@ namespace Niksan.CardGame
             EventBus.OnCardsMatched -= OnCardsMatched;
             EventBus.OnCardsMismatched -= OnCardsMismatched;
             ResetScore();
+        }
+
+        public void SetDataFromSave(LevelSaveData levelSaveData)
+        {
+            isSetFromSave = true;
+            CurrentScore = levelSaveData.currentScore;
+            matchStreak = levelSaveData.currentStreak;
+            EventBus.RaiseScoreUpdate(CurrentScore, matchStreak);
         }
 
         #endregion

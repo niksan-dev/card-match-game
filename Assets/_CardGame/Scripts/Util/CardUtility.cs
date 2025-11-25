@@ -20,8 +20,8 @@ namespace Niksan.CardGame.Utils
             for (int i = 0; i < pairCount; i++)
             {
                 var sprite = shuffled[i].sprite;
-                var dataA = new Card(i, sprite);
-                var dataB = new Card(i, sprite); // Duplicate with same ID
+                var dataA = new Card(shuffled[i].id, sprite);
+                var dataB = new Card(shuffled[i].id, sprite); // Duplicate with same ID
 
                 result.Add(dataA);
                 result.Add(dataB);

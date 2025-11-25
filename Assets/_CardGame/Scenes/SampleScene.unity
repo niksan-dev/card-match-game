@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_Color: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -213,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf94227b5702a2247a8a3c8a6c53a005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClose: {fileID: 0}
+  btnClose: {fileID: 465225841}
   saveGameButton: {fileID: 1645418200}
   newGameButton: {fileID: 1874328932}
 --- !u!1 &64577484
@@ -3109,7 +3109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1232832184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4655,6 +4655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65041ee5fab74b6448fd7d546b79df1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreUI: {fileID: 6891967592814496738}
   spriteData: {fileID: 11400000, guid: 1a44b35270c4edb41b611c94bdfa873c, type: 2}
   cardPrefab: {fileID: 3533522812273168234, guid: 7a8d0cfe4320b0b43b2cf18b3096e12d, type: 3}
   boardPanel: {fileID: 1759033406}
@@ -4713,7 +4714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
+  m_Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4750,7 +4751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b1f54563dd0b74fb469a17ba3b47e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btnClose: {fileID: 0}
+  boardGenerator: {fileID: 1759033410}
+  btnClose: {fileID: 1739171695}
   saveButton: {fileID: 184240851}
   exitButton: {fileID: 694563463}
 --- !u!1 &1770850731
@@ -5641,7 +5643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4175656506346023583
 RectTransform:
   m_ObjectHideFlags: 0

@@ -17,8 +17,8 @@ namespace Niksan.UI
         {
             btnBackToMenu.onClick.AddListener(() =>
             {
-                Debug.Log("[InGame] Back to Main Menu clicked.");
-                uIManager.ShowMainMenu();
+                uIManager.ShowSaveAndExitPopup(true);
+                //uIManager.ShowMainMenu();
             });
         }
         private void OnEnable()
