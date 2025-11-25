@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8242d666a7cde54aa15f6895d76ffb2, type: 3}
   m_Name: LevelConfig_2
   m_EditorClassIdentifier: 
-  rows: 2
-  columns: 3
+  rows: 3
+  columns: 2
   cardFaces:
   - {fileID: 288500220, guid: e99555794e161e547828376a037ea06c, type: 3}
   - {fileID: 74890108, guid: e99555794e161e547828376a037ea06c, type: 3}
   - {fileID: -561538785, guid: e99555794e161e547828376a037ea06c, type: 3}
-  levelID: Level_1
-  displayName: 2 x 2
+  levelID: Level_2
+  displayName: 3x2

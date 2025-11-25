@@ -828,5 +828,7 @@ MonoBehaviour:
   gridLayout: {fileID: 1759033409}
   levelConfigs:
   - {fileID: 11400000, guid: 14b8ecedfbbb4da4f8f2c068c1f2a7cf, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 341faa53696ed0a4985c776f1b5cb4ae, type: 2}
+  - {fileID: 11400000, guid: e9fc5a26b8ac79f448abebd5fbaaa3ee, type: 2}
+  - {fileID: 11400000, guid: 4fbb35cd18e3a1c4d97385a61cf8c86e, type: 2}
+  - {fileID: 11400000, guid: cdc2827f385f3d24e881e13c5ce8e5d1, type: 2}

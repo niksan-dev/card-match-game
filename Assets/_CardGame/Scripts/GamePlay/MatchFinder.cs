@@ -107,7 +107,7 @@ namespace Niksan.CardGame
             flipQueue.Clear();
         }
 
-        IEnumerator WaitAndProcess(ICard first, ICard second, float delay = 0.5f)
+        IEnumerator WaitAndProcess(ICard first, ICard second, float delay = 0.25f)
         {
             yield return new WaitForSeconds(delay);
             first.Disappear();

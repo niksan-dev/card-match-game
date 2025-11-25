@@ -23,7 +23,7 @@ namespace Niksan.CardGame
         [SerializeField] private List<LevelConfig> levelConfigs;
         void Start()
         {
-            GenerateBoard(levelConfigs[0]);
+            GenerateBoard(levelConfigs[3]);
         }
         /// <summary>
         /// Generates a board based on the provided level configuration.
@@ -31,32 +31,32 @@ namespace Niksan.CardGame
         /// <param name="config">Level configuration containing grid and card data.</param>
         public void GenerateBoard(LevelConfig config)
         {
+
+            Debug.Log("Generating board with config: " + config.columns + "x" + config.rows);
             ClearBoard();
 
             // Set grid layout to use fixed number of columns
-            gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            gridLayout.constraintCount = config.columns;
+            //There is an issue with grid layout and dynamic resizing
+            //I'm commenting this out and manually placing cards for now
+            // gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            // gridLayout.constraintCount = config.columns;
 
             int total = config.TotalCards;
 
             // Calculate usable panel size (excluding padding and spacing)
-            float panelWidth = boardPanel.rect.width
-                               - gridLayout.padding.left
-                               - gridLayout.padding.right
-                               - hudHeight
-                               - gridLayout.spacing.x * (config.columns - 1);
+            float panelWidth = GetWidth(config);
 
-            float panelHeight = boardPanel.rect.height
-                                - gridLayout.padding.top
-                                - hudHeight
-                                - gridLayout.padding.bottom
-                                - gridLayout.spacing.y * (config.rows - 1);
+            float panelHeight = GetHeight(config);
 
+
+            Debug.Log($"Panel Width: {panelWidth}, Panel Height: {panelHeight}");
             // Determine card size based on smallest cell (square shape)
             float cellWidth = panelWidth / config.columns;
+            Debug.Log($"Cell Width: {cellWidth}");
             float cellHeight = panelHeight / config.rows;
+            Debug.Log($"Cell Height: {cellHeight}");
             float size = Mathf.Min(cellWidth, cellHeight);
-
+            Debug.Log($"Cell Size: {size}");
             // Apply calculated cell size
             gridLayout.cellSize = new Vector2(size, size);
 
@@ -66,12 +66,17 @@ namespace Niksan.CardGame
             // Instantiate and initialize cards
             foreach (var face in pairs)
             {
-                Debug.Log($"CardFactory.Instance : {CardFactory.Instance}");
+                // Debug.Log($"CardFactory.Instance : {CardFactory.Instance}");
                 // var cardGO 
                 // Log= Instantiate(cardPrefab, boardPanel);
                 var cardFromFactory = CardFactory.Instance.CreateCard(face, Vector2.zero);
                 spawnedCards.Add(cardFromFactory);
                 var card = cardFromFactory.GetComponent<ICard>();
+                RectTransform rectTransform = cardFromFactory.GetComponent<RectTransform>();
+                if (rectTransform != null)
+                {
+                    rectTransform.sizeDelta = new Vector2(size, size);
+                }
                 cardFromFactory.transform.SetParent(boardPanel);
                 card.SetData(face);
             }
@@ -79,11 +84,32 @@ namespace Niksan.CardGame
             PlaceCardsManually(spawnedCards, boardPanel, size, gridSize);
         }
 
+        float GetWidth(LevelConfig config)
+        {
+            Debug.Log("Screen Width: " + Screen.width);
+            float panelWidth = Screen.width
+                               - gridLayout.padding.left
+                               - gridLayout.padding.right
+                               - hudHeight
+                               - gridLayout.spacing.x * (config.columns);
+
+            return panelWidth;
+        }
+        float GetHeight(LevelConfig config)
+        {
+            Debug.Log("Screen Height: " + Screen.height);
+            float panelHeight = Screen.height
+                               - gridLayout.padding.top
+                               - hudHeight
+                               - gridLayout.padding.bottom
+                               - gridLayout.spacing.y * (config.rows);
+            return panelHeight;
+        }
 
         void PlaceCardsManually(List<BasicCard> cards, Transform parent, float size, Vector2 gridSize)
         {
-            int rows = (int)gridSize.x;
-            int columns = (int)gridSize.y;
+            int rows = (int)gridSize.y;
+            int columns = (int)gridSize.x;
 
             float spacingX = 20f;
             float spacingY = 20f;
@@ -129,7 +155,7 @@ namespace Niksan.CardGame
         {
             foreach (Transform child in boardPanel)
             {
-                Destroy(child.gameObject);
+                child.gameObject.SetActive(false);
             }
         }
     }
