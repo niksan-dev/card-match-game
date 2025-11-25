@@ -5,13 +5,11 @@ namespace Niksan.CardGame
 {
 
     [System.Serializable]
-    public class CardFactory : MonoBehaviour
+    public class CardFactory : Singleton<CardFactory>
     {
         [SerializeField] private BasicCard _cardPrefab;
         [SerializeField] private Transform _cardParent;
         [SerializeField] private int _initialPoolSize = 10;
-
-        private ObjectPool<BasicCard> _pool;
 
 
         void Start()
@@ -20,26 +18,28 @@ namespace Niksan.CardGame
         }
         public void Initialize()
         {
-            _pool = new ObjectPool<BasicCard>(_cardPrefab, _cardParent, _initialPoolSize);
+
         }
 
         public BasicCard CreateCard(Card data, Vector3 position)
         {
-            BasicCard card = _pool.Get();
+            BasicCard card = ObjectPooler.Instance.SpawnFromPool("Card", position, Quaternion.identity).GetComponent<BasicCard>();
             card.transform.position = position;
             card.transform.localScale = Vector3.one;
             card.SetData(data);
+            Debug.Log("Card Created from Factory with ID: " + data.id);
             return card;
         }
 
         public void RecycleCard(BasicCard card)
         {
-            _pool.ReturnToPool(card);
+            ObjectPooler.Instance.ReturnToPool(card.gameObject);
         }
 
         public void Clear()
         {
-            _pool.Clear();
+            // _pool.Clear();
+            //ObjectPooler.Instance.cl
         }
     }
 }

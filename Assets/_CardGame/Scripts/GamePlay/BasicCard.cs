@@ -128,6 +128,15 @@ namespace Niksan.CardGame
             // Ensure scale is perfectly set at end
             transform.localScale = new Vector3(to, 1f, 1f);
         }
+
+        public void Disappear()
+        {
+            // transform.localScale = Vector3.zero;
+
+            //add back to object pool if implemented
+            ObjectPooler.Instance.ReturnToPool(this.gameObject);
+        }
+
     }
 
 }

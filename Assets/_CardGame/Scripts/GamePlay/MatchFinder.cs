@@ -80,9 +80,11 @@ namespace Niksan.CardGame
                     matchedCards.Add(first);
                     matchedCards.Add(second);
                     EventBus.RaiseCardsMatched(first, second);
-
+                    StartCoroutine(WaitAndProcess(first, second));
+                    //check for level completion
                     if (matchedCards.Count >= totalCards)
                     {
+                        Debug.Log("All cards matched! Level Complete.");
                         EventBus.RaiseLevelCompleted();
                     }
                 }
@@ -103,6 +105,13 @@ namespace Niksan.CardGame
         {
             matchedCards.Clear();
             flipQueue.Clear();
+        }
+
+        IEnumerator WaitAndProcess(ICard first, ICard second, float delay = 0.5f)
+        {
+            yield return new WaitForSeconds(delay);
+            first.Disappear();
+            second.Disappear();
         }
     }
 }

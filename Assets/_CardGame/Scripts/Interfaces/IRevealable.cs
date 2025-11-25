@@ -19,5 +19,12 @@ namespace Niksan.CardGame
         /// Often used after a mismatch or during board initialization.
         /// </summary>
         void Hide();
+
+        /// <summary>
+        /// Makes the object disappear from the board entirely.
+        /// Often called when the object is successfully matched
+        /// or removed during gameplay animations.
+        /// </summary>
+        void Disappear();
     }
 }
