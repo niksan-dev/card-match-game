@@ -21,7 +21,7 @@ namespace Niksan.CardGame
         [SerializeField] private UIManager uiManager;
         [SerializeField] private BoardGenerator boardGenerator;
         [SerializeField] private MatchFinder matchFinder;
-        [SerializeField] private List<LevelConfig> levels;
+        [SerializeField] private LevelsData levelsData;
 
         private int totalCards;
         public int currentLevel = 0;
@@ -29,7 +29,7 @@ namespace Niksan.CardGame
         /// <summary>
         /// Total number of levels based on LevelConfig list.
         /// </summary>
-        public int maxLevels => levels.Count;
+        public int maxLevels => levelsData.levels.Count;
 
         /// <summary>
         /// Unity Awake lifecycle method. Initializes singleton and loads saved progression.
@@ -49,6 +49,8 @@ namespace Niksan.CardGame
             currentLevel = progressionManager.LoadScoreAndLevel().currentLevel;
         }
 
+        public UIManager UIManager => uiManager;
+        public ProgressionManager ProgressionManager => progressionManager;
         /// <summary>
         /// Starts the current level by generating the board and initializing match finder.
         /// </summary>
@@ -60,9 +62,9 @@ namespace Niksan.CardGame
                 return;
             }
 
-            totalCards = levels[currentLevel].TotalCards;
+            totalCards = levelsData.levels[currentLevel].TotalCards;
             matchFinder.Init(totalCards);
-            boardGenerator.GenerateBoard(levels[currentLevel]);
+            boardGenerator.GenerateBoard(levelsData.levels[currentLevel]);
         }
 
         /// <summary>
@@ -120,7 +122,9 @@ namespace Niksan.CardGame
         /// </summary>
         private IEnumerator DelayToShowGameOver()
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
+            soundManager.PlaySound(SoundType.GAME_WIN);
+            yield return new WaitForSeconds(1);
             UIManager.Instance.ShowGameOver();
         }
 

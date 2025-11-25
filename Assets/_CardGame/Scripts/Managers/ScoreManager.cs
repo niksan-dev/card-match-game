@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Niksan.CardGame
 {
-   /// <summary>
+    /// <summary>
     /// Tracks and updates the player's score and match streaks.
     /// </summary>
     public class ScoreManager : MonoBehaviour
@@ -64,11 +64,11 @@ namespace Niksan.CardGame
         /// </summary>
         private void AddMatchScore()
         {
-            matchStreak++;
+
             int bonus = matchStreak * BONUS_MULTIPLIER;
             int scoreToAdd = PER_MATCH_POINTS + bonus;
             CurrentScore += scoreToAdd;
-
+            matchStreak++;
             EventBus.RaiseScoreUpdate(CurrentScore, matchStreak);
         }
 

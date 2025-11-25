@@ -20,10 +20,10 @@ namespace Niksan.CardGame
         private float hudHeight = 100f; // Optional: Reserved space for HUD if needed
 
         [Header("Level Configs")]
-        [SerializeField] private List<LevelConfig> levelConfigs;
+        [SerializeField] private LevelsData levelsData;
         void Start()
         {
-            GenerateBoard(levelConfigs[2]);
+            GenerateBoard(levelsData.levels[GameManager.Instance.currentLevel]);
         }
         /// <summary>
         /// Generates a board based on the provided level configuration.

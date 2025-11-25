@@ -8,7 +8,7 @@ namespace Niksan.CardGame
     public class ProgressionManager : MonoBehaviour
     {
         private string fileName = "playerData.dat";
-       [SerializeField] private PlayerProgress playerProgress;
+        [SerializeField] private PlayerProgress playerProgress;
 
         public void Initialize(int maxLevels)
         {
@@ -25,16 +25,26 @@ namespace Niksan.CardGame
                     playerProgress.levelScores[i] = -1;
                 }
             }
-            
-            BinarySaveLoadSystem.Save(playerProgress,fileName);
+
+            foreach (var score in playerProgress.levelScores)
+            {
+                Debug.Log($"Level score loaded======>>>>>: {score}");
+            }
+
+            BinarySaveLoadSystem.Save(playerProgress, fileName);
         }
-        
+
         public void SaveScoreAndLevel(int level, int score)
         {
             playerProgress.currentLevel = level + 1;
             playerProgress.levelScores[level] = score;
-            
-            BinarySaveLoadSystem.Save(playerProgress,fileName);
+
+            BinarySaveLoadSystem.Save(playerProgress, fileName);
+        }
+
+        public int GetLevelScore(int level)
+        {
+            return playerProgress.levelScores[level];
         }
 
         public PlayerProgress LoadScoreAndLevel()
@@ -42,9 +52,9 @@ namespace Niksan.CardGame
             playerProgress = BinarySaveLoadSystem.Load<PlayerProgress>(fileName);
             return playerProgress;
         }
-        
-        
-        
+
+
+
     }
 }
 [Serializable]

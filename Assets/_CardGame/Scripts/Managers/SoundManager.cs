@@ -10,7 +10,7 @@ namespace Niksan.CardGame
     /// </summary>
     public class SoundManager : MonoBehaviour
     {
-        public static SoundManager Instance { get; private set; }
+        // public static SoundManager Instance { get; private set; }
 
         [Header("Audio Clips")]
         [SerializeField] private List<SoundSFX> audioClips = new List<SoundSFX>();
@@ -19,15 +19,6 @@ namespace Niksan.CardGame
 
         private void Awake()
         {
-            // Ensure singleton
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             // Populate dictionary
             foreach (var audio in audioClips)
@@ -67,4 +58,5 @@ public enum SoundType
     FLIP = 0,
     MATCH = 1,
     MISMATCH = 2,
+    GAME_WIN = 3,
 }
