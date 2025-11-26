@@ -17,7 +17,7 @@ namespace Niksan.CardGame
         [SerializeField] private SpriteData spriteData;
         [SerializeField] private GameObject cardPrefab;
         [SerializeField] private RectTransform boardPanel;
-        //   [SerializeField] private GridLayoutGroup gridLayout;
+        [SerializeField] private GridLayoutGroup gridLayout;
         private List<BasicCard> spawnedCards = new List<BasicCard>();
         [Header("UI Settings")]
         private float hudHeight = 100f; // Optional: Reserved space for HUD if needed
@@ -43,8 +43,8 @@ namespace Niksan.CardGame
             // Set grid layout to use fixed number of columns
             //There is an issue with grid layout and dynamic resizing
             //I'm commenting this out and manually placing cards for now
-            // gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-            // gridLayout.constraintCount = config.columns;
+            gridLayout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            gridLayout.constraintCount = config.columns;
 
             int total = config.TotalCards;
 
@@ -56,8 +56,9 @@ namespace Niksan.CardGame
             float cellWidth = panelWidth / config.columns;
             float cellHeight = panelHeight / config.rows;
             float size = Mathf.Min(cellWidth, cellHeight);
+            size *= 0.9f; // Optional: Scale down slightly to add spacing
             // Apply calculated cell size
-            // gridLayout.cellSize = new Vector2(size, size);
+            gridLayout.cellSize = new Vector2(size, size);
 
             // Get shuffled card face pairs
             var pairs = CardUtility.GenerateShuffledPairs(spriteData.sprites, total / 2);
@@ -81,7 +82,7 @@ namespace Niksan.CardGame
                         RectTransform rectTransform = cardFromFactory.GetComponent<RectTransform>();
                         if (rectTransform != null)
                         {
-                            rectTransform.sizeDelta = new Vector2(size, size);
+                            // rectTransform.sizeDelta = new Vector2(size, size);
                         }
                         cardFromFactory.transform.SetParent(boardPanel);
                         card.SetData(face);
@@ -129,7 +130,7 @@ namespace Niksan.CardGame
                 RectTransform rectTransform = cardFromFactory.GetComponent<RectTransform>();
                 if (rectTransform != null)
                 {
-                    rectTransform.sizeDelta = new Vector2(size, size);
+                    // rectTransform.sizeDelta = new Vector2(size, size);
                 }
                 cardFromFactory.transform.SetParent(boardPanel);
                 card.SetData(face);
@@ -184,19 +185,20 @@ namespace Niksan.CardGame
         float GetWidth(LevelConfig config)
         {
             Debug.Log("Screen Width: " + Screen.width);
-            float panelWidth = Screen.width
-                               - padding * 2
-                               - padding * (config.columns - 1);
+            float panelWidth = boardPanel.rect.width
+                               - gridLayout.padding.left
+                               - gridLayout.padding.right
+                               - gridLayout.spacing.x * (config.columns - 1);
 
             return panelWidth;
         }
         float GetHeight(LevelConfig config)
         {
             Debug.Log("Screen Height: " + Screen.height);
-            float panelHeight = Screen.height
-                               - padding * 2
-                               - hudHeight
-                               - padding * (config.rows - 1);
+            float panelHeight = boardPanel.rect.height
+                                 - gridLayout.padding.top
+                                 - gridLayout.padding.bottom
+                                 - gridLayout.spacing.y * (config.rows - 1);
             return panelHeight;
         }
 

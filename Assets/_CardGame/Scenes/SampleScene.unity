@@ -4578,6 +4578,7 @@ GameObject:
   - component: {fileID: 1759033408}
   - component: {fileID: 1759033407}
   - component: {fileID: 1759033410}
+  - component: {fileID: 1759033411}
   m_Layer: 5
   m_Name: Panel-GameBoard
   m_TagString: Untagged
@@ -4602,8 +4603,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -74.499985}
+  m_SizeDelta: {x: 0, y: -149}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759033407
 MonoBehaviour:
@@ -4659,7 +4660,32 @@ MonoBehaviour:
   spriteData: {fileID: 11400000, guid: 1a44b35270c4edb41b611c94bdfa873c, type: 2}
   cardPrefab: {fileID: 3533522812273168234, guid: 7a8d0cfe4320b0b43b2cf18b3096e12d, type: 3}
   boardPanel: {fileID: 1759033406}
+  gridLayout: {fileID: 1759033411}
   levelsData: {fileID: 11400000, guid: f4df6741fe505264d8210ffbbe291269, type: 2}
+--- !u!114 &1759033411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759033405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 200, y: 200}
+  m_Spacing: {x: 25, y: 25}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1764479747
 GameObject:
   m_ObjectHideFlags: 0
@@ -5643,7 +5669,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4175656506346023583
 RectTransform:
   m_ObjectHideFlags: 0
