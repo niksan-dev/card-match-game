@@ -87,19 +87,15 @@ namespace Niksan.CardGame
                         card.SetData(face);
 
                         // Restore saved state
-                        CardSaveData savedCardData = levelSaveData.cardsData.Find(c => c.id == card.ID);
-                        if (savedCardData != null)
+                        //CardSaveData savedCardData = levelSaveData.cardsData.Find(c => c.id == cardData.id);
+                        if (cardData != null)
                         {
-                            cardFromFactory.cardState = savedCardData.state;
-                            if (cardFromFactory.cardState == CardState.Matched)
+                            cardFromFactory.cardState = cardData.state;
+                            if (cardData.state == CardState.Matched)
                             {
                                 card.Disappear();
                                 //add this card to matched cards in scoreUI
                                 GameManager.Instance.MatchFinder.matchedCards.Add(card);
-                            }
-                            else if (cardFromFactory.cardState == CardState.FaceUp)
-                            {
-                                card.Reveal();
                             }
                             else
                             {
